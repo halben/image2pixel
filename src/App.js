@@ -25,8 +25,6 @@ function App() {
     // img
     const img = new Image();
 
-    img.src = URL.createObjectURL(file);
-
     img.onload = () => {
       setImage({
         url: img.src,
@@ -44,6 +42,8 @@ function App() {
       origContext.drawImage(img, 0, 0, img.width*sizer, img.height*sizer);
       pixelContext.drawImage(img, 0, 0, img.width*sizer, img.height*sizer);
     };
+
+    img.src = URL.createObjectURL(file);
   }
 
   function preserveAspectRatio(imgW, imgH, maxW, maxH) {
@@ -52,9 +52,8 @@ function App() {
 
   function onSliderChange(evt) {
     const size = parseInt(evt.target.value);
-    const canvas = pixelCanvasRef.current;
 
-    let pixelArr = pixelContext.getImageData(0, 0, canvas.width, canvas.height).data;
+    let pixelArr = pixelContext.getImageData(0, 0, orginalImg.w, orginalImg.h).data;
     let h = orginalImg.h;
     let w = orginalImg.w;
 
