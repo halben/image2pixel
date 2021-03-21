@@ -83,7 +83,18 @@ function App() {
         <div className="preview-col">
           <h3>Pixelated</h3>
           <canvas ref={pixelCanvasRef} width="500" height="300"></canvas>
-          <input type="range" id="volume" name="volume" min="0" max="15" step="1" value={sampleSize} autoComplete="off" onChange={onSliderChange}></input>
+          <input
+            type="range"
+            id="volume"
+            name="volume"
+            min="0"
+            max="15"
+            step="1"
+            value={sampleSize}
+            autoComplete="off"
+            disabled={!orginalImg}
+            onChange={onSliderChange}
+          ></input>
         </div>
       </section>
     </div>
