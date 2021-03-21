@@ -4,11 +4,14 @@ import './App.css';
 function App() {
   const [pixelContext, setPixelContext] = useState(null);
   const [orginalImg, setImage] = useState(null);
+  const [sampleSize, setSampleSize] = useState(0);
   const origCanvasRef = useRef(null);
   const pixelCanvasRef = useRef(null);
 
   async function onFileChange(evt) {
     const file = evt.target.files[0];
+
+    setSampleSize(0);
 
     // original
     const origCanvas = origCanvasRef.current;
@@ -34,11 +37,6 @@ function App() {
 
       const sizer = preserveAspectRatio(img.width, img.height, origCanvas.width, origCanvas.height);
 
-      // pixelContext.imageSmoothingEnabled = false;
-      // pixelContext.mozImageSmoothingEnabled = false;
-      // pixelContext.webkitImageSmoothingEnabled = false;
-      // pixelContext.msImageSmoothingEnabled = false;
-
       origContext.drawImage(img, 0, 0, img.width*sizer, img.height*sizer);
       pixelContext.drawImage(img, 0, 0, img.width*sizer, img.height*sizer);
     };
@@ -53,9 +51,11 @@ function App() {
   function onSliderChange(evt) {
     const size = parseInt(evt.target.value);
 
-    let pixelArr = pixelContext.getImageData(0, 0, orginalImg.w, orginalImg.h).data;
-    let h = orginalImg.h;
-    let w = orginalImg.w;
+    setSampleSize(size);
+
+    const pixelArr = pixelContext.getImageData(0, 0, orginalImg.w, orginalImg.h).data;
+    const h = orginalImg.h;
+    const w = orginalImg.w;
 
     for (let y = 0; y < h; y += size) {
       for (let x = 0; x < w; x += size) {
@@ -83,7 +83,7 @@ function App() {
         <div className="preview-col">
           <h3>Pixelated</h3>
           <canvas ref={pixelCanvasRef} width="500" height="300"></canvas>
-          <input type="range" id="volume" name="volume" min="0" max="20" onChange={onSliderChange}></input>
+          <input type="range" id="volume" name="volume" min="0" max="15" step="1" value={sampleSize} autoComplete="off" onChange={onSliderChange}></input>
         </div>
       </section>
     </div>
