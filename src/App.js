@@ -13,10 +13,13 @@ function App() {
     // original
     const origCanvas = origCanvasRef.current;
     const origContext = origCanvas.getContext('2d');
+    origContext.clearRect(0, 0, origCanvas.width, origCanvas.height);
 
     // edited
     const pixelCanvas = pixelCanvasRef.current;
     const pixelContext = pixelCanvas.getContext('2d');
+    pixelContext.clearRect(0, 0, pixelCanvas.width, pixelCanvas.height);
+
     setPixelContext(pixelContext);
 
     // img
